@@ -84,9 +84,18 @@ export async function POST(request) {
 
     const video = videoData.items[0]
     
-    // Get comments
+    // Get comments with dynamic limit based on video popularity
+    const videoViews = parseInt(video.snippet.statistics?.viewCount || 0)
+    const commentCount = parseInt(video.snippet.statistics?.commentCount || 0)
+    
+    // Smart comment limit based on engagement - Optimized for better performance
+    let maxComments = 50 // Standard amount for good analysis
+    if (commentCount > 1000) maxComments = 75
+    if (commentCount > 5000) maxComments = 100
+    if (commentCount > 20000) maxComments = 150
+    
     const commentsResponse = await fetch(
-      `https://www.googleapis.com/youtube/v3/commentThreads?videoId=${videoId}&part=snippet&order=relevance&maxResults=50&key=${apiKey}`
+      `https://www.googleapis.com/youtube/v3/commentThreads?videoId=${videoId}&part=snippet&order=relevance&maxResults=${maxComments}&key=${apiKey}`
     )
     
     let comments = []
