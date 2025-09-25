@@ -99,7 +99,7 @@ export default function Home() {
               <div className="text-left text-blue-800">
                 <div className="flex items-start space-x-3 mb-2">
                   <span className="bg-blue-200 text-blue-900 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-0.5">1</span>
-                  <p>Click vào card <strong>"Phân tích video"</strong> bên dưới</p>
+                  <p>Click vào card <strong>&quot;Phân tích video&quot;</strong> bên dưới</p>
                 </div>
                 <div className="flex items-start space-x-3 mb-2">
                   <span className="bg-blue-200 text-blue-900 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-0.5">2</span>

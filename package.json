@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "fastapi-dev": "python -m uvicorn app.fastapi.hume_ai_refined:app --reload --port 8000",
-    "fastapi-old": "python -m uvicorn app.fastapi.index:app --reload --port 8000",
+    "fastapi-dev": "python -m uvicorn app.fastapi.index:app --reload --port 8000",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint"
