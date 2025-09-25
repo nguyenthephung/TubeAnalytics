@@ -1,6 +1,6 @@
 # 🎯 TubeAnalytics - AI-Powered YouTube Comment Analysis
 
-![Project Screenshot](assets/demo1.png)
+![Project Screenshot](public/assets/demo1.png)
 
 [![Demo](https://img.shields.io/badge/🚀-Live_Demo-blue?style=for-the-badge)](https://your-demo-link.vercel.app)
 [![Version](https://img.shields.io/badge/version-1.0.0-green?style=for-the-badge)]()
@@ -12,7 +12,6 @@
 
 Ứng dụng web phân tích cảm xúc bình luận YouTube sử dụng Hume AI. Trích xuất và phân tích 50+ loại cảm xúc từ bình luận, cung cấp insights về phản ứng khán giả.
 
-![Demo Interface](assets/demo2.png)
 
 ## ✨ Tính năng
 
@@ -22,7 +21,7 @@
 - 🎯 **Smart sampling**: Tự động điều chỉnh số lượng comment (50-200)
 - 📱 **Responsive**: Tương thích mọi thiết bị
 
-![Features Dashboard](assets/demo3.png)
+![Features Dashboard](public/assets/demo2.png)
 
 ## 🛠️ Tech Stack
 
@@ -32,7 +31,8 @@
 - **Hume AI** - Emotion analysis API
 - **Google Cloud API (YouTube API)** - Comment extraction
 
-![Analysis Results](assets/demo4.png)
+![Analysis Results](public/assets/demo3.png)
+![Demo Interface](public/assets/demo4.png)
 
 ## 🚀 Demo
 
