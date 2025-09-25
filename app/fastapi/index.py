@@ -31,7 +31,9 @@ app.add_middleware(
 )
 
 # Hume AI configuration
-HUME_API_KEY = os.getenv("HUME_API_KEY", "ghVbZYw5X4Qj2U7YqPW6H5didOaYyn4984uStf7xxGIz3vcV")
+HUME_API_KEY = os.getenv("HUME_API_KEY")
+if not HUME_API_KEY:
+    raise ValueError("HUME_API_KEY environment variable is required")
 
 class Comment(BaseModel):
     id: str
