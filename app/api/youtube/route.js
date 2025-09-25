@@ -1,5 +1,39 @@
 import { NextResponse } from 'next/server'
 
+// Server-side HTML cleaning function
+function cleanHtmlText(text) {
+  if (!text) return ''
+  
+  let cleanText = text
+  
+  // Decode HTML entities
+  cleanText = cleanText
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&apos;/g, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#x27;/g, "'")
+    .replace(/&#x2F;/g, '/')
+    .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(dec))
+    .replace(/&#x([0-9a-fA-F]+);/g, (match, hex) => String.fromCharCode(parseInt(hex, 16)))
+    
+  // Remove HTML tags
+  cleanText = cleanText.replace(/<[^>]*>/g, '')
+  
+  // Clean up whitespace
+  cleanText = cleanText
+    .replace(/\n\n+/g, '\n\n') // Multiple line breaks to double
+    .replace(/^\s+|\s+$/g, '') // Trim whitespace
+    
+  // Remove zero-width characters
+  cleanText = cleanText.replace(/[\u200B-\u200D\uFEFF]/g, '')
+  
+  return cleanText
+}
+
 export async function POST(request) {
   try {
     const { url } = await request.json()
@@ -40,8 +74,8 @@ export async function POST(request) {
       console.log('Comments API response status:', commentsResponse.status)
       comments = commentsData.items?.map(item => ({
         id: item.id,
-        text: item.snippet.topLevelComment.snippet.textDisplay,
-        author: item.snippet.topLevelComment.snippet.authorDisplayName,
+        text: cleanHtmlText(item.snippet.topLevelComment.snippet.textDisplay),
+        author: cleanHtmlText(item.snippet.topLevelComment.snippet.authorDisplayName),
         authorImage: item.snippet.topLevelComment.snippet.authorProfileImageUrl,
         likeCount: item.snippet.topLevelComment.snippet.likeCount,
         publishedAt: item.snippet.topLevelComment.snippet.publishedAt,
@@ -57,17 +91,17 @@ export async function POST(request) {
     // Process video data
     const videoInfo = {
       id: video.id,
-      title: video.snippet.title,
-      description: video.snippet.description,
+      title: cleanHtmlText(video.snippet.title),
+      description: cleanHtmlText(video.snippet.description),
       thumbnail: video.snippet.thumbnails.maxres?.url || video.snippet.thumbnails.high?.url || video.snippet.thumbnails.medium.url,
-      channelTitle: video.snippet.channelTitle,
+      channelTitle: cleanHtmlText(video.snippet.channelTitle),
       channelId: video.snippet.channelId,
       publishedAt: video.snippet.publishedAt,
       viewCount: parseInt(video.statistics.viewCount || 0),
       likeCount: parseInt(video.statistics.likeCount || 0),
       commentCount: parseInt(video.statistics.commentCount || 0),
       duration: video.contentDetails.duration,
-      tags: video.snippet.tags || [],
+      tags: video.snippet.tags?.map(tag => cleanHtmlText(tag)) || [],
       categoryId: video.snippet.categoryId
     }
 

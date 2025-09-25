@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Avatar from '../../components/Avatar'
+import { truncateText } from '../../utils/textUtils'
 
 export default function AnalyzePage() {
   const { data: session } = useSession()
@@ -305,9 +306,11 @@ export default function AnalyzePage() {
                             {formatDate(comment.publishedAt)}
                           </span>
                         </div>
-                        <p className="text-gray-700 text-sm mb-2">
-                          {comment.text}
-                        </p>
+                        <div className="text-gray-700 text-sm mb-2 leading-relaxed">
+                          <p className="whitespace-pre-wrap break-words">
+                            {truncateText(comment.text, 400)}
+                          </p>
+                        </div>
                         <div className="flex items-center space-x-4 text-xs text-gray-500">
                           <span className="flex items-center">
                             <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
