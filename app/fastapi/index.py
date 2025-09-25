@@ -39,41 +39,41 @@ class Comment(BaseModel):
     id: str
     text: str
     author: str
-    likeCount: int
+    likeCount: int = Field(default=0, ge=0)
     publishedAt: str
 
 class AnalysisRequest(BaseModel):
     comments: List[Comment]
-    video_title: str = ""
-    analysis_type: str = "comprehensive"
+    video_title: str = Field(default="")
+    analysis_type: str = Field(default="comprehensive")
 
 class SentimentResult(BaseModel):
-    positive: int
-    negative: int
-    neutral: int
-    total: int
-    positive_percentage: float
-    negative_percentage: float
-    neutral_percentage: float
+    positive: int = Field(ge=0)
+    negative: int = Field(ge=0)
+    neutral: int = Field(ge=0)
+    total: int = Field(ge=0)
+    positive_percentage: float = Field(ge=0, le=100)
+    negative_percentage: float = Field(ge=0, le=100)
+    neutral_percentage: float = Field(ge=0, le=100)
 
 class TopicResult(BaseModel):
     topic: str
-    count: int
-    percentage: float
-    sample_comments: List[str]
+    count: int = Field(ge=0)
+    percentage: float = Field(ge=0, le=100)
+    sample_comments: List[str] = Field(default_factory=list)
 
 class TrendResult(BaseModel):
     trend: str
-    score: float
+    score: float = Field(ge=0, le=1)
     description: str
-    related_comments: List[str]
+    related_comments: List[str] = Field(default_factory=list)
 
 class AnalysisResponse(BaseModel):
     sentiment: SentimentResult
-    topics: List[TopicResult]
-    trends: List[TrendResult]
+    topics: List[TopicResult] = Field(default_factory=list)
+    trends: List[TrendResult] = Field(default_factory=list)
     summary: str
-    total_comments: int
+    total_comments: int = Field(ge=0)
     analysis_timestamp: str
 
 async def analyze_emotions_with_hume(comments: List[Comment]) -> Dict[str, Any]:
@@ -431,4 +431,18 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    import asyncio
+    
+    # Ensure proper event loop for Python 3.13
+    try:
+        uvicorn.run(
+            "index:app", 
+            host="0.0.0.0", 
+            port=8000, 
+            reload=True,
+            loop="asyncio"
+        )
+    except Exception as e:
+        print(f"Server startup error: {e}")
+        # Fallback for older systems
+        uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
