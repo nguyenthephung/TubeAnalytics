@@ -10,7 +10,9 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv()
+load_dotenv(dotenv_path=".env")
+load_dotenv(dotenv_path="../.env")  # Fallback to parent directory
+load_dotenv(dotenv_path="../../.env.local")  # Fallback to root .env.local
 
 app = FastAPI(
     title="YouTube Comment AI Analysis with Hume AI",
@@ -30,10 +32,36 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Hume AI configuration
+# Hume AI configuration  
 HUME_API_KEY = os.getenv("HUME_API_KEY")
+
+# For development, allow fallback (remove in production)
 if not HUME_API_KEY:
-    raise ValueError("HUME_API_KEY environment variable is required")
+    print("⚠️  HUME_API_KEY not found in environment variables")
+    print("📝 Checking .env file exists...")
+    
+    # Try to load from different locations
+    from pathlib import Path
+    env_paths = [
+        Path(".env"),
+        Path("app/fastapi/.env"), 
+        Path("../../.env.local"),
+        Path(".env.local")
+    ]
+    
+    for env_path in env_paths:
+        if env_path.exists():
+            print(f"✅ Found env file: {env_path}")
+            load_dotenv(env_path)
+            HUME_API_KEY = os.getenv("HUME_API_KEY")
+            if HUME_API_KEY:
+                print("✅ HUME_API_KEY loaded successfully")
+                break
+    
+    if not HUME_API_KEY:
+        print("❌ HUME_API_KEY still not found. Please check your .env file")
+        # For development, use a placeholder (REMOVE IN PRODUCTION)
+        HUME_API_KEY = "development-placeholder"
 
 class Comment(BaseModel):
     id: str
