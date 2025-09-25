@@ -1,38 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎯 TubeAnalytics - AI-Powered YouTube Comment Analysis
 
-## Getting Started
+![Project Screenshot](assets/demo1.png)
 
-First, run the development server:
+[![Demo](https://img.shields.io/badge/🚀-Live_Demo-blue?style=for-the-badge)](https://your-demo-link.vercel.app)
+[![Version](https://img.shields.io/badge/version-1.0.0-green?style=for-the-badge)]()
+[![License](https://img.shields.io/badge/license-MIT-orange?style=for-the-badge)]()
 
+> Phân tích cảm xúc bình luận YouTube bằng AI - Hiểu rõ phản ứng khán giả
+
+## 📋 Tổng quan
+
+Ứng dụng web phân tích cảm xúc bình luận YouTube sử dụng Hume AI. Trích xuất và phân tích 50+ loại cảm xúc từ bình luận, cung cấp insights về phản ứng khán giả.
+
+![Demo Interface](assets/demo2.png)
+
+## ✨ Tính năng
+
+- 🎭 **Phân tích cảm xúc AI**: 50+ loại cảm xúc với Hume AI
+- 📊 **Dashboard trực quan**: Biểu đồ và thống kê realtime  
+- 🇻🇳 **Giao diện tiếng Việt**: Hoàn toàn bản địa hóa
+- 🎯 **Smart sampling**: Tự động điều chỉnh số lượng comment (50-200)
+- 📱 **Responsive**: Tương thích mọi thiết bị
+
+![Features Dashboard](assets/demo3.png)
+
+## 🛠️ Tech Stack
+
+- **Next.js** - React framework & App Router
+- **TailwindCSS** - Utility-first CSS styling
+- **FastAPI** - Python web framework  
+- **Hume AI** - Emotion analysis API
+- **Google Cloud API (YouTube API)** - Comment extraction
+
+![Analysis Results](assets/demo4.png)
+
+## 🚀 Demo
+
+🔗 **Live Demo**: [https://your-demo-link.vercel.app](https://your-demo-link.vercel.app)
+
+1. Dán link YouTube video
+2. Nhấn "Phân tích bằng AI" 
+3. Xem kết quả sau 30-60 giây
+
+## ⚡ Cài đặt
+
+### Yêu cầu
+- Node.js 18+
+- Python 3.8+
+
+### Setup
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone repo
+git clone https://github.com/nguyenthephung/TubeAnalytics.git
+cd TubeAnalytics
+
+# Install dependencies
+npm install
+cd app/fastapi && pip install -r requirements.txt
+
+# Environment variables
+cp .env.example .env.local
+# Thêm YouTube API key, Hume AI keys
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Chạy
+```bash
+# Terminal 1 - Backend
+cd app/fastapi && python index.py
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+# Terminal 2 - Frontend  
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Truy cập: `http://localhost:3000`
 
-## Learn More
+## 👨‍💻 Tác giả
 
-To learn more about Next.js, take a look at the following resources:
+**Nguyễn Thể Phụng**
+- GitHub: [@nguyenthephung](https://github.com/nguyenthephung)
+- LinkedIn: [Nguyễn Thể Phụng](https://www.linkedin.com/in/ph%E1%BB%A5ng-nguy%E1%BB%85n-th%E1%BB%83-285107385/)
+- Email: your-email@domain.com
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🙏 Credits
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Hume AI](https://www.hume.ai/) - Emotion analysis
+- [YouTube Data API](https://developers.google.com/youtube/v3) - Comment extraction
+- [Next.js](https://nextjs.org/) - React framework
+- [FastAPI](https://fastapi.tiangolo.com/) - Python backend
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-# TubeAnalytics
+<div align="center">
+  <h3>⭐ Nếu project hữu ích, hãy cho chúng tôi một star! ⭐</h3>
+  
+  **Made with ❤️ by Nguyễn Thể Phụng**
+  
+  [![GitHub stars](https://img.shields.io/github/stars/nguyenthephung/TubeAnalytics?style=social)](https://github.com/nguyenthephung/TubeAnalytics)
+  [![GitHub forks](https://img.shields.io/github/forks/nguyenthephung/TubeAnalytics?style=social)](https://github.com/nguyenthephung/TubeAnalytics/fork)
+  [![GitHub watchers](https://img.shields.io/github/watchers/nguyenthephung/TubeAnalytics?style=social)](https://github.com/nguyenthephung/TubeAnalytics)
+</div>
