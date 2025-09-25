@@ -1,6 +1,7 @@
 'use client'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   const { data: session, status } = useSession()
@@ -91,32 +92,59 @@ export default function Home() {
             <p className="text-lg text-gray-600 mb-8">
               Bạn đã đăng nhập thành công với email: {session.user.email}
             </p>
+
+            {/* Quick Start Guide */}
+            <div className="bg-blue-50 rounded-lg p-6 mb-8">
+              <h3 className="text-lg font-semibold text-blue-900 mb-3">🚀 Bắt đầu nhanh</h3>
+              <div className="text-left text-blue-800">
+                <div className="flex items-start space-x-3 mb-2">
+                  <span className="bg-blue-200 text-blue-900 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-0.5">1</span>
+                  <p>Click vào card <strong>"Phân tích video"</strong> bên dưới</p>
+                </div>
+                <div className="flex items-start space-x-3 mb-2">
+                  <span className="bg-blue-200 text-blue-900 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-0.5">2</span>
+                  <p>Dán link YouTube bất kỳ (ví dụ: https://www.youtube.com/watch?v=...)</p>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <span className="bg-blue-200 text-blue-900 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-0.5">3</span>
+                  <p>Xem thông tin video và phân tích các bình luận nổi bật!</p>
+                </div>
+              </div>
+            </div>
             
             {/* Dashboard Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-              <div className="bg-white overflow-hidden shadow rounded-lg">
-                <div className="p-5">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <svg className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                      </svg>
-                    </div>
-                    <div className="ml-5 w-0 flex-1">
-                      <dl>
-                        <dt className="text-sm font-medium text-gray-500 truncate">
-                          Analytics Dashboard
-                        </dt>
-                        <dd className="text-lg font-medium text-gray-900">
-                          Sắp có
-                        </dd>
-                      </dl>
+              {/* Video Analyzer Card */}
+              <Link href="/analyze" className="block">
+                <div className="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-200 cursor-pointer border-2 border-transparent hover:border-red-200">
+                  <div className="p-5">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0">
+                        <svg className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <div className="ml-5 w-0 flex-1">
+                        <dl>
+                          <dt className="text-sm font-medium text-gray-500 truncate">
+                            Phân tích video
+                          </dt>
+                          <dd className="text-lg font-medium text-gray-900">
+                            Phân tích video YouTube
+                          </dd>
+                        </dl>
+                      </div>
+                      <div className="flex-shrink-0">
+                        <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
 
-              <div className="bg-white overflow-hidden shadow rounded-lg">
+              <div className="bg-white overflow-hidden shadow rounded-lg opacity-50">
                 <div className="p-5">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
@@ -138,7 +166,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="bg-white overflow-hidden shadow rounded-lg">
+              <div className="bg-white overflow-hidden shadow rounded-lg opacity-50">
                 <div className="p-5">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
