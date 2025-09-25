@@ -31,14 +31,34 @@ export const cleanHtmlText = (text) => {
       .replace(/&#x27;/g, "'")
       .replace(/&#x2F;/g, '/')
       
+    // Remove emojis and icons
+    cleanText = cleanText
+      // Remove emoji ranges
+      .replace(/[\u{1F600}-\u{1F64F}]/gu, '') // Emoticons
+      .replace(/[\u{1F300}-\u{1F5FF}]/gu, '') // Misc Symbols and Pictographs  
+      .replace(/[\u{1F680}-\u{1F6FF}]/gu, '') // Transport and Map
+      .replace(/[\u{1F1E0}-\u{1F1FF}]/gu, '') // Flags
+      .replace(/[\u{2600}-\u{26FF}]/gu, '')   // Misc symbols
+      .replace(/[\u{2700}-\u{27BF}]/gu, '')   // Dingbats
+      .replace(/[\u{1F900}-\u{1F9FF}]/gu, '') // Supplemental Symbols and Pictographs
+      .replace(/[\u{1F018}-\u{1F270}]/gu, '') // Various symbols
+      // Remove specific common icons and symbols
+      .replace(/[★☆♥♡💙💚💛💜🧡❤️💖💗💓💕💘💝💞💟❣️💔💋👍👎👌✌️🤞🤘🤟🤙👊✊🤜🤛👏🙌🤲🤝🤗🔥💯⚡🎉🎊]/gu, '')
+      // Remove arrows and other symbols
+      .replace(/[←↑→↓↔↕⬅⬆➡⬇⤴⤵]/gu, '')
+      // Remove musical notes and other symbols
+      .replace(/[♪♫♬♩🎵🎶]/gu, '')
+      
     // Remove YouTube-specific formatting
     cleanText = cleanText
       .replace(/\n\n+/g, '\n\n') // Multiple line breaks to double
       .replace(/^\s+|\s+$/g, '') // Trim whitespace
       
-    // Remove or replace emoji/special characters that might cause issues
-    // Keep most Unicode characters but clean up problematic ones
+    // Remove zero-width characters and other problematic Unicode
     cleanText = cleanText.replace(/[\u200B-\u200D\uFEFF]/g, '') // Zero-width characters
+    
+    // Clean up extra spaces
+    cleanText = cleanText.replace(/\s+/g, ' ').trim()
     
     return cleanText
   } catch (error) {
