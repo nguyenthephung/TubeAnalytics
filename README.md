@@ -2,7 +2,7 @@
 
 ![Project Screenshot](public/assets/demo1.png)
 
-[![Demo](https://img.shields.io/badge/🚀-Live_Demo-blue?style=for-the-badge)](https://your-demo-link.vercel.app)
+[![Demo](https://img.shields.io/badge/🚀-Live_Demo-blue?style=for-the-badge)](https://tube-analytics-w5pb.vercel.app/)
 [![Version](https://img.shields.io/badge/version-1.0.0-green?style=for-the-badge)]()
 [![License](https://img.shields.io/badge/license-MIT-orange?style=for-the-badge)]()
 
@@ -36,7 +36,7 @@
 
 ## 🚀 Demo
 
-🔗 **Live Demo**: [https://your-demo-link.vercel.app](https://your-demo-link.vercel.app)
+🔗 **Live Demo**: [https://tube-analytics-w5pb.vercel.app/](https://tube-analytics-w5pb.vercel.app/)
 
 1. Dán link YouTube video
 2. Nhấn "Phân tích bằng AI" 
@@ -79,7 +79,7 @@ Truy cập: `http://localhost:3000`
 **Nguyễn Thể Phụng**
 - GitHub: [@nguyenthephung](https://github.com/nguyenthephung)
 - LinkedIn: [Nguyễn Thể Phụng](https://www.linkedin.com/in/ph%E1%BB%A5ng-nguy%E1%BB%85n-th%E1%BB%83-285107385/)
-- Email: your-email@domain.com
+- Email: nguyenthephung61@gmail.com
 
 ## 🙏 Credits
 
