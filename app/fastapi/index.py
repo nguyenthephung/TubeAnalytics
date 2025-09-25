@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import List, Dict, Any
 from hume import HumeStreamClient
 from hume.models.config import LanguageConfig
@@ -67,41 +67,41 @@ class Comment(BaseModel):
     id: str
     text: str
     author: str
-    likeCount: int = Field(default=0, ge=0)
+    likeCount: int = 0
     publishedAt: str
 
 class AnalysisRequest(BaseModel):
     comments: List[Comment]
-    video_title: str = Field(default="")
-    analysis_type: str = Field(default="comprehensive")
+    video_title: str = ""
+    analysis_type: str = "comprehensive"
 
 class SentimentResult(BaseModel):
-    positive: int = Field(ge=0)
-    negative: int = Field(ge=0)
-    neutral: int = Field(ge=0)
-    total: int = Field(ge=0)
-    positive_percentage: float = Field(ge=0, le=100)
-    negative_percentage: float = Field(ge=0, le=100)
-    neutral_percentage: float = Field(ge=0, le=100)
+    positive: int
+    negative: int
+    neutral: int
+    total: int
+    positive_percentage: float
+    negative_percentage: float
+    neutral_percentage: float
 
 class TopicResult(BaseModel):
     topic: str
-    count: int = Field(ge=0)
-    percentage: float = Field(ge=0, le=100)
-    sample_comments: List[str] = Field(default_factory=list)
+    count: int
+    percentage: float
+    sample_comments: List[str]
 
 class TrendResult(BaseModel):
     trend: str
-    score: float = Field(ge=0, le=1)
+    score: float
     description: str
-    related_comments: List[str] = Field(default_factory=list)
+    related_comments: List[str]
 
 class AnalysisResponse(BaseModel):
     sentiment: SentimentResult
-    topics: List[TopicResult] = Field(default_factory=list)
-    trends: List[TrendResult] = Field(default_factory=list)
+    topics: List[TopicResult]
+    trends: List[TrendResult]
     summary: str
-    total_comments: int = Field(ge=0)
+    total_comments: int
     analysis_timestamp: str
 
 async def analyze_emotions_with_hume(comments: List[Comment]) -> Dict[str, Any]:
@@ -459,18 +459,4 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    import asyncio
-    
-    # Ensure proper event loop for Python 3.13
-    try:
-        uvicorn.run(
-            "index:app", 
-            host="0.0.0.0", 
-            port=8000, 
-            reload=True,
-            loop="asyncio"
-        )
-    except Exception as e:
-        print(f"Server startup error: {e}")
-        # Fallback for older systems
-        uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
