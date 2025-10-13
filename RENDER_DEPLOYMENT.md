@@ -6,14 +6,24 @@ Dự án này deploy FastAPI backend lên Render sử dụng `render.yaml`.
 
 ### Cấu trúc thư mục quan trọng:
 ```
-tube-analytics/
-├── render.yaml              # Cấu hình Render (root của repo)
+tube-analytics/                         ← ROOT của repository
+├── render.yaml                         ← Render đọc file này (PHẢI ở root!)
+├── package.json
+├── next.config.mjs
 └── app/
-    └── fastapi/
-        ├── index.py         # FastAPI app chính
-        ├── requirements.txt # Python dependencies
-        └── runtime.txt      # Python version (3.12.5)
+    └── fastapi/                        ← rootDir: app/fastapi trỏ đến đây
+        ├── index.py                    ← FastAPI app chính
+        ├── requirements.txt            ← Python dependencies
+        └── runtime.txt                 ← Python version (3.12.5)
 ```
+
+**⚠️ LƯU Ý QUAN TRỌNG:**
+- `render.yaml` **PHẢI** nằm ở **ROOT** của repo (không được nằm trong thư mục con)
+- Khi deploy bằng Blueprint, Render sẽ:
+  1. Tìm `render.yaml` ở root repo
+  2. Đọc config `rootDir: app/fastapi` từ yaml
+  3. Clone toàn bộ repo nhưng **chạy build/start từ thư mục `app/fastapi`**
+- **KHÔNG** điền Root Directory trong Dashboard khi dùng Blueprint (để Render tự đọc từ yaml)
 
 ## ✅ Checklist trước khi deploy
 
@@ -70,9 +80,11 @@ Package `hume==0.4.0` yêu cầu biên dịch Rust, nên `render.yaml` đã đư
 
 4. **Connect Repository:** chọn repo GitHub `TubeAnalytics`
 
-5. **Render sẽ tự động phát hiện và đọc `render.yaml` từ root repo**
+5. **Render sẽ tự động phát hiện `render.yaml` từ ROOT repo**
+   - ⚠️ **QUAN TRỌNG:** Render sẽ tìm `render.yaml` ở root repo (không cần điền Root Directory)
+   - ⚠️ **KHÔNG điền gì vào "Root Directory"** trong Dashboard (để trống hoặc `.`)
    - Service Name: `fastapi-server` (từ render.yaml)
-   - Root Directory: `app/fastapi` (từ render.yaml)
+   - `rootDir: app/fastapi` trong yaml sẽ tự động được áp dụng
    - Build/Start Commands: (đã có trong render.yaml)
 
 6. **Review và Apply**
@@ -80,6 +92,8 @@ Package `hume==0.4.0` yêu cầu biên dịch Rust, nên `render.yaml` đã đư
 7. **Thêm Environment Variables** trong Dashboard:
    - Dashboard → Service → Environment
    - Add: `HUME_API_KEY` = `your-key-here`
+
+**LƯU Ý:** Với Blueprint, `render.yaml` **PHẢI** nằm ở root repo. Config `rootDir: app/fastapi` trong yaml báo cho Render biết thư mục làm việc khi build/start.
 
 ### Option 2: Deploy thủ công qua Dashboard (nếu KHÔNG dùng render.yaml)
 
