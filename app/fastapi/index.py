@@ -10,9 +10,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv(dotenv_path=".env")
-load_dotenv(dotenv_path="../.env")  # Fallback to parent directory
-load_dotenv(dotenv_path="../../.env.local")  # Fallback to root .env.local
+load_dotenv()
 
 app = FastAPI(
     title="YouTube Comment AI Analysis with Hume AI",
@@ -32,42 +30,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Hume AI configuration  
-HUME_API_KEY = os.getenv("HUME_API_KEY")
-
-# For development, allow fallback (remove in production)
-if not HUME_API_KEY:
-    print("⚠️  HUME_API_KEY not found in environment variables")
-    print("📝 Checking .env file exists...")
-    
-    # Try to load from different locations
-    from pathlib import Path
-    env_paths = [
-        Path(".env"),
-        Path("app/fastapi/.env"), 
-        Path("../../.env.local"),
-        Path(".env.local")
-    ]
-    
-    for env_path in env_paths:
-        if env_path.exists():
-            print(f"✅ Found env file: {env_path}")
-            load_dotenv(env_path)
-            HUME_API_KEY = os.getenv("HUME_API_KEY")
-            if HUME_API_KEY:
-                print("✅ HUME_API_KEY loaded successfully")
-                break
-    
-    if not HUME_API_KEY:
-        print("❌ HUME_API_KEY still not found. Please check your .env file")
-        # For development, use a placeholder (REMOVE IN PRODUCTION)
-        HUME_API_KEY = "development-placeholder"
+# Hume AI configuration
+HUME_API_KEY = os.getenv("HUME_API_KEY", "ghVbZYw5X4Qj2U7YqPW6H5didOaYyn4984uStf7xxGIz3vcV")
 
 class Comment(BaseModel):
     id: str
     text: str
     author: str
-    likeCount: int = 0
+    likeCount: int
     publishedAt: str
 
 class AnalysisRequest(BaseModel):
@@ -459,5 +429,4 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.getenv("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port, reload=False)
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
