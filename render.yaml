@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: fastapi-server
+    env: python
+    rootDir: app/fastapi
+    buildCommand: |
+      export CARGO_HOME=/tmp/cargo
+      export RUSTUP_HOME=/tmp/rustup
+      curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable --no-modify-path
+      PATH="/tmp/cargo/bin:$PATH" pip install --upgrade pip
+      PATH="/tmp/cargo/bin:$PATH" pip install -r requirements.txt
+    startCommand: PATH="/tmp/cargo/bin:$PATH" uvicorn index:app --host 0.0.0.0 --port 10000
+    envVars:
+      - key: CARGO_HOME
+        value: /tmp/cargo
+      - key: RUSTUP_HOME
+        value: /tmp/rustup
