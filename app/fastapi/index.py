@@ -32,8 +32,12 @@ app.add_middleware(
 )
 
 # Hume AI configuration
-HUME_API_KEY = os.getenv("HUME_API_KEY", "ghVbZYw5X4Qj2U7YqPW6H5didOaYyn4984uStf7xxGIz3vcV")
+HUME_API_KEY = os.getenv("HUME_API_KEY")
 HUME_API_URL = "https://api.hume.ai/v0/batch/jobs"
+
+if not HUME_API_KEY:
+    print("⚠️  WARNING: HUME_API_KEY not found in environment variables!")
+    print("   Please set HUME_API_KEY in your .env file or environment")
 
 class Comment(BaseModel):
     id: str
@@ -493,8 +497,29 @@ async def debug_emotions():
         }
     }
 
+@app.get("/")
+@app.head("/")
+async def root():
+    """Root endpoint - supports both GET and HEAD methods"""
+    return {
+        "service": "Tube Analytics API",
+        "version": "3.0.0",
+        "status": "running",
+        "ai_provider": "Hume AI REST API",
+        "endpoints": {
+            "health": "/health",
+            "analyze": "/analyze",
+            "analyze_raw": "/analyze-raw",
+            "debug": "/debug/emotions"
+        },
+        "documentation": "/docs",
+        "timestamp": datetime.now().isoformat()
+    }
+
 @app.get("/health")
+@app.head("/health")
 async def health_check():
+    """Health check endpoint - supports both GET and HEAD methods"""
     return {
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),
